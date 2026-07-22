@@ -1,6 +1,5 @@
 # Auth System
 
-![Secure Auth Banner](./auth-banner.svg)
 
 A production-grade, highly secure token-based authentication system built using Node.js, Express, MongoDB (Mongoose), and Redis.
 
