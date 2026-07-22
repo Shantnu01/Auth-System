@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f24" />
+      <stop offset="50%" stop-color="#12183a" />
+      <stop offset="100%" stop-color="#070a1e" />
+    </linearGradient>
+
+    <!-- Shield/Glow Gradient -->
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+
+    <!-- Lock Body Gradient -->
+    <linearGradient id="lock-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+
+    <!-- Keyhole Glow -->
+    <radialGradient id="glow-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#00f2fe" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* CSS Styles & Animations */
+    .bg {
+      fill: url(#bg-grad);
+    }
+
+    .title-text {
+      font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+      font-weight: 800;
+      fill: #ffffff;
+      font-size: 42px;
+      letter-spacing: 2px;
+    }
+
+    .subtitle-text {
+      font-family: 'Inter', system-ui, sans-serif;
+      fill: #9ca3af;
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    /* Particle / Tech Lines animation */
+    .tech-line {
+      stroke: #00f2fe;
+      stroke-width: 1.5;
+      stroke-dasharray: 8 180;
+      stroke-dashoffset: 0;
+      animation: dash 3s linear infinite;
+      opacity: 0.4;
+    }
+
+    .tech-line-reverse {
+      stroke: #4facfe;
+      stroke-width: 1.5;
+      stroke-dasharray: 8 180;
+      stroke-dashoffset: 0;
+      animation: dash-reverse 4s linear infinite;
+      opacity: 0.4;
+    }
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -188;
+      }
+    }
+
+    @keyframes dash-reverse {
+      to {
+        stroke-dashoffset: 188;
+      }
+    }
+
+    /* Glowing circle pulse */
+    .pulse-circle {
+      transform-origin: 550px 150px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(0.96);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scale(1.04);
+        opacity: 0.7;
+      }
+    }
+
+    /* Shackle unlocking animation */
+    .shackle {
+      transform-origin: 550px 105px;
+      animation: shackle-move 6s ease-in-out infinite;
+      stroke: url(#accent-grad);
+      stroke-width: 8;
+      fill: none;
+    }
+
+    @keyframes shackle-move {
+      0%, 20%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40%, 60% {
+        transform: translateY(-12px) rotate(-15deg);
+      }
+    }
+
+    /* Lock body glow */
+    .lock-body {
+      fill: url(#lock-grad);
+      stroke: #1e293b;
+      stroke-width: 2;
+      transition: all 0.5s;
+    }
+
+    .lock-body-glow {
+      stroke: #00f2fe;
+      stroke-width: 2;
+      animation: lock-glow 6s ease-in-out infinite;
+    }
+
+    @keyframes lock-glow {
+      0%, 20%, 80%, 100% {
+        stroke: #1e293b;
+        filter: drop-shadow(0 0 0px rgba(0, 242, 254, 0));
+      }
+      40%, 60% {
+        stroke: #00f2fe;
+        filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.6));
+      }
+    }
+
+    /* Status dot animation */
+    .status-dot {
+      fill: #ef4444;
+      animation: status-change 6s ease-in-out infinite;
+    }
+
+    @keyframes status-change {
+      0%, 20%, 80%, 100% {
+        fill: #ef4444;
+        filter: drop-shadow(0 0 2px rgba(239, 68, 68, 0.8));
+      }
+      40%, 60% {
+        fill: #10b981;
+        filter: drop-shadow(0 0 6px rgba(16, 185, 129, 0.8));
+      }
+    }
+  </style>
+
+  <!-- Background -->
+  <rect class="bg" width="800" height="300" rx="16" />
+
+  <!-- Grid Overlay (subtle tech look) -->
+  <g opacity="0.05">
+    <path d="M 0,50 L 800,50 M 0,100 L 800,100 M 0,150 L 800,150 M 0,200 L 800,200 M 0,250 L 800,250" stroke="#ffffff" stroke-width="1" />
+    <path d="M 100,0 L 100,300 M 200,0 L 200,300 M 300,0 L 300,300 M 400,0 L 400,300 M 500,0 L 500,300 M 600,0 L 600,300 M 700,0 L 700,300" stroke="#ffffff" stroke-width="1" />
+  </g>
+
+  <!-- Tech Circles and Lines on the left -->
+  <g>
+    <!-- Line 1 -->
+    <path class="tech-line" d="M 50,150 L 320,150" />
+    <!-- Line 2 -->
+    <path class="tech-line-reverse" d="M 80,180 L 300,180" />
+    <!-- Line 3 -->
+    <path class="tech-line" d="M 100,120 L 280,120" />
+  </g>
+
+  <!-- Text Group -->
+  <g transform="translate(80, 140)">
+    <text class="title-text" x="0" y="0">SECURE AUTH</text>
+    <text class="subtitle-text" x="0" y="32">Node.js Express Authentication System</text>
+    
+    <!-- Badges -->
+    <g transform="translate(0, 52)">
+      <!-- JWT -->
+      <rect x="0" y="0" width="55" height="22" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="27.5" y="15" font-family="Inter, sans-serif" font-size="10" font-weight="bold" fill="#38bdf8" text-anchor="middle">JWT</text>
+
+      <!-- Redis -->
+      <rect x="65" y="0" width="60" height="22" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="95" y="15" font-family="Inter, sans-serif" font-size="10" font-weight="bold" fill="#f87171" text-anchor="middle">REDIS</text>
+
+      <!-- MongoDB -->
+      <rect x="135" y="0" width="80" height="22" rx="4" fill="#1e293b" stroke="#334155" />
+      <text x="175" y="15" font-family="Inter, sans-serif" font-size="10" font-weight="bold" fill="#34d399" text-anchor="middle">MONGOOSE</text>
+    </g>
+  </g>
+
+  <!-- Graphic Lock Representation on the right (centered at 550, 150) -->
+  <g>
+    <!-- Background pulse circles -->
+    <circle class="pulse-circle" cx="550" cy="150" r="100" fill="none" stroke="url(#accent-grad)" stroke-width="1" />
+    <circle class="pulse-circle" cx="550" cy="150" r="75" fill="none" stroke="url(#accent-grad)" stroke-width="1.5" stroke-dasharray="5 5" />
+
+    <!-- Shackle -->
+    <path class="shackle" d="M 515,130 L 515,105 A 35,35 0 0,1 585,105 L 585,130" />
+
+    <!-- Lock Body -->
+    <rect class="lock-body lock-body-glow" x="500" y="125" width="100" height="75" rx="12" />
+
+    <!-- Keyhole & Glow -->
+    <circle cx="550" cy="162" r="14" fill="url(#glow-grad)" />
+    <path d="M 550,154 A 6,6 0 0,0 545,162 C 545,165 547,167 548,169 L 548,175 A 2,2 0 0,0 552,175 L 552,169 C 553,167 555,165 555,162 A 6,6 0 0,0 550,154 Z" fill="#00f2fe" />
+
+    <!-- Status indicator LED -->
+    <circle class="status-dot" cx="580" cy="142" r="4" />
+  </g>
+</svg>
