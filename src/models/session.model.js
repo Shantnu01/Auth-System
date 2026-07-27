@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const sessionSchema = new mongoose.Schema({
-  userId: {
+  userID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true
@@ -11,16 +11,32 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  ipAddress: {
+    type: String
+  },
+  userAgent: {
+    type: String
+  },
+  deviceName: {
+    type: String
+  },
+  lastUsedAt: {
+    type: Date,
+     default: Date.now
+  },
   createdAt: {
     type: Date,
-    default: Date.now, // auto-set when created
+    default: Date.now,
     required: true
   },
   expiresAt: {
     type: Date,
-    required: true
+    required: true,
+    index: { expireAfterSeconds: 0 }
   }
-});
+},{
+    timestamps: true,
+  });
 
 // TTL index: auto-delete when expiresAt is reached
 sessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
@@ -31,19 +47,19 @@ sessionSchema.pre("save", async function (next) {
   if (!this.expiresAt) {
     this.expiresAt = new Date(this.createdAt.getTime() + 30 * 24 * 60 * 60 * 1000);
   }
-  if(refreshToken.ismodified())
-  {
-    const hash =await bcrypt.hash(this.refreshToken,12);
-    this.refreshToken=hash;
-     
-        next();}}
+   if (!this.isModified("refreshToken")) return next();
+ 
+   
+    this.refreshToken=await bcrypt.hash(this.refreshToken,12);
+    next();
+  }
        catch (err) {
         next(err);
       }
     } 
 );
-sessionSchema.method.compare=async(sessionID)=>{
-     return await bcrypt.compare(sessionID,this._id);
+sessionSchema.methods.compare=async function(refreshToken){
+     return await bcrypt.compare(refreshToken,this.refreshToken);
   
 }
 

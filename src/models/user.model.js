@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    unique:true,
     required: true,
     lowercase: true,
     trim: true,
@@ -19,6 +20,13 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 8,
     select: false
+  },
+  role:{
+     type: String,
+    enum: ["user", "admin"], 
+    default: "user",                   
+    required: true
+
   }
 }, { timestamps: true });
 
