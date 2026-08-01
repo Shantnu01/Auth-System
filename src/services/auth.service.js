@@ -5,7 +5,7 @@ const UnAuth=require("../errors/UnAuth")
 const jwt=require("jsonwebtoken")
 const Session=require("../models/session.model");
 
-
+const client=require("../config/redis");
 
 class authService {
 

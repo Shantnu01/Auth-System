@@ -1,20 +1,53 @@
 // const User = require("../models/user.model");
-const {userValidator,refreshTokenValidator} = require("../validators/auth.validator");
+const {userValidator,refreshTokenValidator,sendOtpValidator} = require("../validators/auth.validator");
 const Service=require("../services/auth.service");
 const jwt=require("jsonwebtoken")
 const mongoose=require("mongoose");
 const Session = require("../models/session.model");
 const UnAuth = require("../errors/UnAuth");
+const emailService=require("../services/otp.service")
+const BadReq=require("../errors/BadRequestError")
+
 
 class authController {
+  static sendOtp = async (req, res, next) => {
+    try {
+      const data = sendOtpValidator.parse(req.body);
+      await Service.checkEmailExists(data);
+      await emailService.sendOtp(req, data.email);
+
+      return res.status(200).json({
+        success: true,
+        message: "OTP sent successfully to your email."
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  static resendOtp = async (req, res, next) => {
+    try {
+      const data = sendOtpValidator.parse(req.body);
+      await emailService.resendOtp(req, data.email);
+
+      return res.status(200).json({
+        success: true,
+        message: "New OTP sent successfully to your email."
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   static register = async (req, res, next) => {
     try {
-    
-     
       const data = userValidator.parse(req.body);
 
       await Service.checkEmailExists(data);
-     
+      const result = await emailService.checkOtp(req, data.email, data.otp);
+      if (!result)
+        throw new BadReq("Register failed!");
+
       await Service.createUser(data);
 
       return res.status(201).json({
@@ -22,7 +55,6 @@ class authController {
         message: "User registered successfully."
       });
     } catch (err) {
-      
       next(err);
     }
   };
@@ -262,7 +294,7 @@ static deleteSession=async(req,res,next)=>
      if (!existingSession) {
              throw new NotFoundError("Session dont exist.");
          }
-  if(existingSession.userId.toString() !== decoded.userId){
+  if(existingSession.userID.toString() !== decoded.userID){
     throw new UnAuth("Not autherised to do so!")
   }
   await Session.findByIdAndDelete(sessionId);

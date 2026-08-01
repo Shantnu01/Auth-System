@@ -12,11 +12,16 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-redis": "^10.0.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.7.4",
-    "redis": "^6.1.0",
+    "nodemailer": "^9.0.3",
+    "redis": "^6.2.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {

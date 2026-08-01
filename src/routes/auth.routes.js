@@ -5,6 +5,8 @@ const admin=require("../controllers/admin.controller");
 const authenticate=require("../middleware/auth.middleware");
 
 
+router.post("/send-otp", auth.sendOtp);
+router.post("/resend-otp", auth.resendOtp);
 router.post("/register",auth.register)
 router.post("/login",auth.login)
 router.post("/refresh",authenticate.authenticateUser ,auth.refreshToken)

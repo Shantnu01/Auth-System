@@ -1,5 +1,9 @@
 const {z}=require("zod")
 
+const sendOtpValidator=z.object({
+  email:z.string().toLowerCase().email({ message: "Give a legit email." }).transform(val => val.trim())
+});
+
 const userValidator=z.object({
   name:z.string().transform(val => val.trim()),
   email:z.string().toLowerCase().email({ message: "Give a legit email." }).transform(val => val.trim()),
@@ -8,7 +12,8 @@ const userValidator=z.object({
   .regex(/^(?=.*[A-Z])/, { message: "Password must contain at least one uppercase letter" })
   .regex(/^(?=.*[a-z])/, { message: "Password must contain at least one lowercase letter" })
   .regex(/^(?=.*\d)/, { message: "Password must contain at least one number" })
-  .regex(/^(?=.*[!@#$%^&*(),.?":{}|<>])/, { message: "Password must contain at least one special character" })
+  .regex(/^(?=.*[!@#$%^&*(),.?":{}|<>])/, { message: "Password must contain at least one special character" }),
+  otp:z.string().length(6, { message: "OTP must be 6 digits" })
 })
 
 
@@ -22,4 +27,5 @@ const refreshTokenValidator = z.object({
   createdAt: z.coerce.date().optional(),
   expiresAt: z.coerce.date()
 });
-module.exports={userValidator,refreshTokenValidator};
+
+module.exports={userValidator,refreshTokenValidator,sendOtpValidator};
